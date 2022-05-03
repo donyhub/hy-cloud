@@ -1,5 +1,7 @@
 package io.dony.hycloud.uca.config;
 
+import io.dony.hycloud.uca.service.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
+
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -17,10 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user").password(this.passwordEncoder().encode("123")).roles("user")
-                .and()
-                .withUser("admin").password(this.passwordEncoder().encode("123")).roles("admin");
+        auth.userDetailsService(this.userDetailsService).passwordEncoder(this.passwordEncoder());
     }
 
     @Override

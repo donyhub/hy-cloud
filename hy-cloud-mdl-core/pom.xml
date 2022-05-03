@@ -9,14 +9,18 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>hy-cloud-uca</artifactId>
+    <artifactId>hy-cloud-mdl-core</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>io.dony</groupId>
-            <artifactId>hy-cloud-mdl-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+<!--                    打包模块，跳过查找main类-->
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
